@@ -5,7 +5,7 @@ import React from 'react';
 
 
 //获取图片相关数据
-let imageDatas = require('json!../data/imageDatas.json');
+let imageDatas = require('../data/imageData.json');
 
 /**
  * 将图片信息转成URL路径信息
@@ -13,10 +13,9 @@ let imageDatas = require('json!../data/imageDatas.json');
  * @return {array} 图片信息数组
  */
 imageDatas = ((imageDatasArr) => {
-	// "use strict";
-	for (let i = 0, len = imageDatasArr.length; i < len; i++) {
+	for (var i = 0, j = imageDatasArr.length; i < j; i++) {
 		let singleImageData = imageDatasArr[i];
-		singleImageData.imageUrl = require('../images/' + singleImageData.fileName);
+		singleImageData.imageURL = require('../images/' + singleImageData.fileName);
 		imageDatasArr[i] = singleImageData;
 	}
 	return imageDatasArr;
