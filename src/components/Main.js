@@ -3,30 +3,52 @@ require('styles/App.scss');
 
 import React from 'react';
 
+//获取图片数据
+let imageDatas = require('../data/imageDatas.json');
 
-//获取图片相关数据
-let imageDatas = require('../data/imageData.json');
-
-/**
- * 将图片信息转成URL路径信息
- * @param  {array} imageDatasArr 图片信息数组
- * @return {array} 图片信息数组
- */
+//利用自执行函数，将图片的信息转换为图片的url信息
 imageDatas = ((imageDatasArr) => {
-	for (var i = 0, j = imageDatasArr.length; i < j; i++) {
+	for (let i = 0, j = imageDatasArr.length; i < j; i++) {
 		let singleImageData = imageDatasArr[i];
+
 		singleImageData.imageURL = require('../images/' + singleImageData.fileName);
+
 		imageDatasArr[i] = singleImageData;
 	}
+
 	return imageDatasArr;
 })(imageDatas);
-
+var ImgFigure = React.createClass({
+	render: function() {
+		return (
+			<figure>
+                <img src = {this.props.data.imageURL}
+                     alt = {this.props.data.title}
+                />
+                <figcaption>
+                    <h2>{this.props.data.title}</h2>
+                </figcaption>
+            </figure>
+		);
+	}
+});
 class AppComponent extends React.Component {
+
 	render() {
+		var controllerUnits = [],
+			imgFigures = [];
+		imageDatas.forEach(function(value) {
+			imgFigures.push(<ImgFigure data = {value}/>);
+		});
+
 		return (
 			<section className = "stage">
-			    <section className = "img-sec"></section>
-			    <nav className = "controller-nav"></nav>
+			    <section className = "img-sec">
+			        {imgFigures}
+			    </section>
+			    <nav className = "controller-nav">
+			        {controllerUnits}
+			    </nav>
 			</section>
 		);
 	}
