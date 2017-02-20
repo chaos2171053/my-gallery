@@ -278,6 +278,7 @@ class AppComponent extends React.Component {
 			}
 			imgFigures.push(<ImgFigure key ={index} data = {value} ref = {'imgFigure' + index} 
 				                       arrange = {this.state.imgsArrangeArr[index]}
+				                       center = {this.center(index)}
 				                       inverse = {this.inverse(index)}/>);
 		}.bind(this));
 
