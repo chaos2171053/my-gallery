@@ -61,17 +61,18 @@ class ImgFigure extends React.Component {
 
 		//如果图片的旋转角度有值并且不为0，添加旋转角度
 		if (this.props.arrange.rotate) {
-			(['Moz', 'Ms', 'Webkit', '']).forEach((value) => {
-				styleObj[value + 'Transform'] = 'rotate(' + this.props.arrange.rotate + 'deg)';
-			});
+			(['MosTransform', 'msTransform', 'WebkitTransform', 'transform']).forEach(function(value) {
+				styleObj[value] = 'rotate(' + this.props.arrange.rotate + 'deg)';
+			}.bind(this));
 		}
 
 
-		let imgFigureClassName = 'img-figure';
-		imgFigureClassName += this.props.arrange.isInverse ? ' is-inverse ' : '';
 		if (this.props.arrange.isCenter) {
 			styleObj.zIndex = 11;
 		}
+
+		let imgFigureClassName = 'img-figure';
+		imgFigureClassName += this.props.arrange.isInverse ? ' is-inverse ' : '';
 
 		return (
 			<figure className = {imgFigureClassName} style= {styleObj} onClick = {this.handleClick}>
@@ -87,6 +88,41 @@ class ImgFigure extends React.Component {
 			</figure>
 
 		);
+	}
+}
+
+class ControllerUnit extends React.Component {
+	constructor(props) {
+		super(props);
+		this.handleClick = this.handleClick.bind(this);
+	}
+
+	handleClick(e) {
+		//翻转和居中图片
+		if (this.props.arrange.isCenter) {
+			this.props.inverse()
+		} else {
+			this.props.center();
+		}
+		e.stopPropagation();
+		e.preventDefault();
+	}
+
+
+
+	render() {
+		let controllerUnitClassName = 'controller-unit';
+		//如果对应的是居中的图片，显示控制按钮的居中态
+		if (this.props.arrange.isCenter) {
+			controllerUnitClassName += ' is-center ';
+			//如果翻转显示翻转状态
+			if (this.props.arrange.isInverse) {
+				controllerUnitClassName += 'is-inverse'
+			}
+		}
+		return (
+			<span className={ controllerUnitClassName } onClick={this.handleClick}></span>
+		)
 	}
 }
 
@@ -262,7 +298,7 @@ class AppComponent extends React.Component {
 	}
 
 	render() {
-		var controllerUnits = [],
+		let controllerUnits = [],
 			imgFigures = [];
 		imageDatas.forEach(function(value, index) {
 			if (!this.state.imgsArrangeArr[index]) {
@@ -280,6 +316,13 @@ class AppComponent extends React.Component {
 				                       arrange = {this.state.imgsArrangeArr[index]}
 				                       center = {this.center(index)}
 				                       inverse = {this.inverse(index)}/>);
+
+
+			controllerUnits.push(<ControllerUnit key={index} 
+			                     arrange = {this.state.imgsArrangeArr[index]}
+			                     center = {this.center(index)}
+			                     inverse = {this.inverse(index)}
+			                                  />);
 		}.bind(this));
 
 		return (
@@ -287,9 +330,9 @@ class AppComponent extends React.Component {
 			    <section className = "img-sec">
 			        {imgFigures}
 			    </section>
-			    <nav className = "controller-nav">
-			        {controllerUnits}
-			    </nav>
+			    <nav className="controller-nav">
+                    {controllerUnits}
+                </nav>
 			</section>
 		);
 	}
