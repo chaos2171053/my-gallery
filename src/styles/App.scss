@@ -1,10 +1,10 @@
 /* Base Application Styles */
 @font-face {
   font-family: 'iconfont';
-  src: url('../fonts/icons/turn-arrow.eot') format("embedded-opentype"), /* IE9*/
-  url('../fonts/icons/turn-arrow.woff') format('woff'), /* chrome、firefox */
-  url('../fonts/icons/turn-arrow.ttf') format('truetype'), /* chrome、firefox、opera、Safari, Android, iOS 4.2+*/
-  url('../fonts/icons/turn-arrow.svg') format('svg'); /* iOS 4.1- */
+  src: url('../fonts/icons/iconfont.eot') format("embedded-opentype"), /* IE9*/
+  url('../fonts/icons/iconfont.woff') format('woff'), /* chrome、firefox */
+  url('../fonts/icons/iconfont.ttf') format('truetype'), /* chrome、firefox、opera、Safari, Android, iOS 4.2+*/
+  url('../fonts/icons/iconfont.svg') format('svg'); /* iOS 4.1- */
 }
 @mixin width_heigth {
   width: 100%;
@@ -48,7 +48,7 @@ html,body {
       transform-style: preserve-3d;
       transition: transform .6s ease-in-out, left .6s ease-in-out, top .6s ease-in-out;
       &.is-inverse {
-        transform: translate(320px) rotateY(180deg);
+        transform: translate(320px) rotateY(180deg);//旋转问题
       }
     }
 
